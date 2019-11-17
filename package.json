@@ -10,7 +10,7 @@
     "websocket": "^1.0.30"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "node server/server",
     "dev": "nodemon server/server",
     "build": "react-scripts build",
     "test": "react-scripts test",

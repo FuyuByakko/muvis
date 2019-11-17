@@ -18,7 +18,7 @@ export default class App extends React.Component {
   }
 
   createConnection() {
-    let port = process.env.PORT;
+    // let port = process.env.PORT;
     let host = window.location.host
     const newConnection = new WebSocket(`wss://${host}`);
     newConnection.onmessage = this.handleMessageReceived;
