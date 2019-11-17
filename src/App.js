@@ -1,26 +1,47 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+export default class App extends React.Component {
+  constructor() {
+    super();
+    this.connection = this.createConnection();
+    this.state = {
+      connection: null,
+      messages: [],
+      text: "",
+      user: "",
+    }
+  }
 
-export default App;
+  handleMessageReceived = (message) => {
+    this.setState({messages: [...this.state.messages, message.data]});
+  }
+
+  createConnection() {
+    const newConnection = new WebSocket('ws://192.168.1.15:5000');
+    newConnection.onmessage = this.handleMessageReceived;
+    console.log("setting new connection");
+    console.log(newConnection);
+    return newConnection;
+  }
+
+  render() {
+    return (
+      <div className="App">
+          <div id="messageBoard">
+            <div className="message">
+              {this.state.messages.map(message => <p>{message}</p>)}
+            </div>
+          </div>
+          <input id="userName" placeholder="Enter Your User Name" onChange={(e) => {this.setState({user: e.target.value})}} />
+          <input id="message" placeholder="Enter Your Message" onChange={(e) => {this.setState({text: e.target.value})}} /> 
+          <button onClick={() => { 
+            console.log(this.connection);
+            this.connection.send(`'user':${this.state.user},'message':${this.state.text}`)
+            }
+          }> SEND </button>
+      </div>
+    );
+
+  } 
+}
