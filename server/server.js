@@ -1,19 +1,26 @@
-// const express = require('express');
-// const app = express();
+const express = require('express');
 const http = require('http');
 const WebSocket = require('websocket').server
 
-const server = http.createServer((req, res) => {
-  console.info("Received a request");
-})
-let connection;
+const app = express();
+
+const server = http.createServer(app)
+// (req, res) => {
+//   console.info("Received a request");
+// })
+// let connection;
 const allConnections = [];
 
+// app.use(req => req.json());
+app.use(express.static(`${__dirname}/../build/`));
+// (req, res) => {
+
+// })
 
 const ws = new WebSocket({httpServer: server});
 
 ws.on('request', req => {
-  connection = req.accept(null, req.origin);
+  const connection = req.accept(null, req.origin);
   connection.on('open', () => {console.log('CONNECTION OPEN')});
   allConnections.push(connection);
   connection.on('close', () => {console.log('CONNECTION CLOSED')});

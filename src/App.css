@@ -1,7 +1,10 @@
 .App {
-  display: flexbox;
+  display: flex;
   text-align: center;
 }
+
+#userInput,
+#
 
 
 .App-logo {

@@ -18,7 +18,9 @@ export default class App extends React.Component {
   }
 
   createConnection() {
-    const newConnection = new WebSocket('ws://192.168.1.15:5000');
+    let port = process.env.PORT;
+    let host = window.location.hostname
+    const newConnection = new WebSocket(`ws://${host}:${port}`);
     newConnection.onmessage = this.handleMessageReceived;
     console.log("setting new connection");
     console.log(newConnection);
@@ -33,13 +35,15 @@ export default class App extends React.Component {
               {this.state.messages.map(message => <p>{message}</p>)}
             </div>
           </div>
-          <input id="userName" placeholder="Enter Your User Name" onChange={(e) => {this.setState({user: e.target.value})}} />
-          <input id="message" placeholder="Enter Your Message" onChange={(e) => {this.setState({text: e.target.value})}} /> 
-          <button onClick={() => { 
-            console.log(this.connection);
-            this.connection.send(`'user':${this.state.user},'message':${this.state.text}`)
-            }
-          }> SEND </button>
+          <div id="userInput">
+            <input id="userName" placeholder="Enter Your User Name" onChange={(e) => {this.setState({user: e.target.value})}} />
+            <input id="message" placeholder="Enter Your Message" onChange={(e) => {this.setState({text: e.target.value})}} /> 
+            <button onClick={() => { 
+              console.log(this.connection);
+              this.connection.send(`'user':${this.state.user},'message':${this.state.text}`)
+              }
+            }> SEND </button>
+          </div>
       </div>
     );
 
