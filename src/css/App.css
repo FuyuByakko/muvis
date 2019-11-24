@@ -1,0 +1,64 @@
+.App {
+  margin: 0;
+  margin-top: 20px;
+  padding: 0;
+  display: grid;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  grid-template-columns: 2fr 3fr 1fr 2fr;
+  grid-template-rows: 100px 50px 400px 100px;
+  justify-items: center;
+  align-items: center;
+  grid-template-areas: 
+    ". logo logo ."
+    ". userId reconnect ."
+    ". messages messages ."
+    ". textInput textSend ." ;
+  column-gap: 30px;
+  row-gap: 30px;
+}
+
+input,
+button {
+  border-radius: 10px;
+  padding: 10px;
+}
+
+#logo {
+  grid-area: logo;
+}
+
+#messageBoard {
+  padding: 10px;
+  grid-area: messages;
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+  border: 2px white solid;
+  border-radius: 10px;
+  background-color:#26c88a;
+  opacity: 40%;
+}
+
+#userMessageInput {
+  grid-area: textInput;
+  width: 100%;
+  height: 100%;
+}
+
+#userNameInput {
+  grid-area: userId;
+  width: 100%;
+}
+
+/* Button CSS */
+#sendMessage {
+  grid-area: textSend;
+  width: 100%;
+  font-size: larger;
+}
+
+#reconnect {
+  grid-area: reconnect;
+}

@@ -1,5 +1,7 @@
 import React from 'react';
-import './App.css';
+import './css/App.css';
+import logo from './assets/logo_title.png';
+import Message from './components/Message'
 
 export default class App extends React.Component {
   constructor() {
@@ -12,6 +14,34 @@ export default class App extends React.Component {
       user: "",
     }
   }
+  
+  render() {
+    return (
+      <div className="App">
+        <img id="logo" src={logo} alt="The logo for MUVIS" />
+        <div id="messageBoard">
+          {this.state.messages.map(message => <Message message={message}/>)}
+        </div>
+        <input
+          id="userNameInput"
+          placeholder="Enter Your User Name"
+          onChange={(e) => {this.setState({user: e.target.value})}}
+        />
+        <button id="reconnect" onClick={() => {this.createConnection()}}> Re-Connect </button>
+        <input
+          id="userMessageInput"
+          placeholder="Enter Your Message"
+          onChange={(e) => {this.setState({text: e.target.value})}}
+          onKeyDown={(e) => {
+            if(e.keyCode === 13) {
+              this.handleMessageSend()
+            }
+          }}
+        /> 
+        <button id="sendMessage" onClick={() => {this.handleMessageSend()}}> SEND </button>
+      </div>
+    );
+  } 
 
   dataIsValid = () => {
     return (this.state.user && this.state.text)
@@ -40,32 +70,4 @@ export default class App extends React.Component {
     console.info("CREATING NEW CONNECTION");
     return newConnection;
   }
-
-  render() {
-    return (
-      <div className="App">
-          <div id="messageBoard">
-            {this.state.messages.map(message => <p>{message["message"]}</p>)}
-          </div>
-          <input
-            id="userName"
-            placeholder="Enter Your User Name"
-            onChange={(e) => {this.setState({user: e.target.value})}}
-          />
-          <button id="reconnect" onClick={() => {this.createConnection()}}> Re-Connect </button>
-          <input
-            id="userMessage"
-            placeholder="Enter Your Message"
-            onChange={(e) => {this.setState({text: e.target.value})}}
-            onKeyDown={(e) => {
-              if(e.keyCode === 13) {
-                this.handleMessageSend()
-              }
-            }}
-          /> 
-          <button id="sendMessage" onClick={() => {this.handleMessageSend()}}> SEND </button>
-      </div>
-    );
-
-  } 
 }
