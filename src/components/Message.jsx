@@ -11,7 +11,7 @@ export default function Message(props) {
     ) : (
       <header className="userName">{receivedMessage.user}</header>
     )}
-    <main className="content">{receivedMessage.message}</main>
+    <main className="content"><p>{receivedMessage.message}</p></main>
     <time className="postTime">{receivedMessage.time}</time>
   </div>
   )

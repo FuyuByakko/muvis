@@ -36,12 +36,8 @@ export default class App extends React.Component {
           placeholder="Enter Your Message"
           onChange={(e) => {this.setState({text: e.target.value})}}
           onKeyDown={(e) => {
-            if(e.keyCode === 13) {
-              if(e.shiftKey) {
-                this.setState({text: this.state.text.concat('\n')});
-              } else {
-                this.handleMessageSend()
-              }
+            if(e.keyCode === 13 && !(e.shiftKey)) {
+              this.handleMessageSend();
             }
           }}
         /> 
@@ -68,10 +64,10 @@ export default class App extends React.Component {
   }
 
   createConnection() {
-    let port = process.env.PORT;
+    // let port = process.env.PORT;
     let host = window.location.host
-    // const newConnection = new WebSocket(`wss://${host}`);
-    const newConnection = new WebSocket("ws://localhost:5000");
+    const newConnection = new WebSocket(`wss://${host}`);
+    // const newConnection = new WebSocket("ws://localhost:5000");
     newConnection.onmessage = this.handleMessageReceived;
     console.info("CREATING NEW CONNECTION");
     return newConnection;
