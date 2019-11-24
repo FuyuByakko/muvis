@@ -1,6 +1,7 @@
 import React from 'react';
 import './css/App.css';
 import logo from './assets/logo_title.png';
+import qrCode from './assets/muvis-chat.png';
 import Message from './components/Message'
 
 export default class App extends React.Component {
@@ -19,8 +20,9 @@ export default class App extends React.Component {
     return (
       <div className="App">
         <img id="logo" src={logo} alt="The logo for MUVIS" />
+        <img id="qr-code" src={qrCode} alt="qr code link for MUVIS" />
         <div id="messageBoard">
-          {this.state.messages.map(message => <Message message={message}/>)}
+          {this.state.messages.map(message => <Message message={message} key={message.time}/>)}
         </div>
         <input
           id="userNameInput"
@@ -29,14 +31,17 @@ export default class App extends React.Component {
           onChange={(e) => {this.setState({user: e.target.value})}}
         />
         <button id="reconnect" onClick={() => {this.createConnection()}}> Re-Connect </button>
-        <input
-          type="textarea"
+        <textarea
           id="userMessageInput"
           placeholder="Enter Your Message"
           onChange={(e) => {this.setState({text: e.target.value})}}
           onKeyDown={(e) => {
             if(e.keyCode === 13) {
-              this.handleMessageSend()
+              if(e.shiftKey) {
+                this.setState({text: this.state.text.concat('\n')});
+              } else {
+                this.handleMessageSend()
+              }
             }
           }}
         /> 

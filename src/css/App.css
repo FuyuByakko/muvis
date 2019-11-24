@@ -1,26 +1,27 @@
 .App {
-  margin: 0;
-  min-width: 450px;
+  margin: auto;
+  min-width: 400px;
   padding-top: 20px;
   padding: 0;
   display: grid;
-  width: 100%;
+  width: 80%;
   height: 100%;
   text-align: center;
-  grid-template-columns: 2fr 3fr 1fr 2fr;
-  grid-template-rows: 100px 50px 400px 100px;
   justify-items: center;
   align-items: center;
+  grid-template-columns: 3fr 1fr;
+  grid-template-rows: 100px 50px 400px 100px;
   grid-template-areas: 
-    ". logo logo ."
-    ". userId reconnect ."
-    ". messages messages ."
-    ". textInput textSend ." ;
+    "logo logo"
+    "userId reconnect"
+    "messages messages"
+    "textInput textSend" ;
   column-gap: 30px;
   row-gap: 30px;
 }
 
 input,
+textarea,
 button {
   border-radius: 10px;
   padding: 10px;
@@ -40,14 +41,14 @@ button {
   overflow-y: auto;
   border: 2px white solid;
   border-radius: 10px;
-  background-color:#57bb95;
-  opacity: 30%;
+  background-color:#4fc095a9;
 }
 
 #userMessageInput {
   grid-area: textInput;
   width: 100%;
   height: 100%;
+  resize: none;
 }
 
 #userNameInput {
@@ -64,4 +65,31 @@ button {
 
 #reconnect {
   grid-area: reconnect;
+}
+
+#qr-code {
+  display: none;
+}
+
+
+@media screen and (min-width: 900px) {
+  .App {
+    width: 70%;
+    grid-template-columns: 1fr 3fr 1fr;
+    grid-template-rows: 150px 50px 400px 100px;
+    column-gap: 40px;
+    grid-template-areas: 
+    "logo qr reconnect"
+    "userId messages messages"
+    "textInput messages messages"
+    "textSend messages messages";
+  }
+
+  #qr-code {
+    display: block;
+    margin: 0;
+    padding: 0;
+    grid-area: qr;
+    max-height: 100px;;
+  }
 }
