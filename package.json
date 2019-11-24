@@ -11,7 +11,8 @@
   },
   "scripts": {
     "start": "node server/server",
-    "dev": "nodemon server/server",
+    "serve": "nodemon server/server",
+    "dev": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
@@ -33,5 +34,6 @@
   },
   "devDependencies": {
     "nodemon": "^1.19.4"
-  }
+  },
+  "proxy": "http://localhost:5000"
 }

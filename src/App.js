@@ -13,14 +13,28 @@ export default class App extends React.Component {
     }
   }
 
+  dataIsValid = () => {
+    return (this.state.user && this.state.text)
+  }
+
   handleMessageReceived = (message) => {
     this.setState({messages: [...this.state.messages, message.data]});
   }
 
+  handleMessageSend = () => {
+    if (this.dataIsValid()) {
+      this.connection.send(`'user':${this.state.user},'message':${this.state.text}`)
+      console.info("Message Sent!");
+    }
+    console.info("Input Invalid. Message Not Sent!");
+
+  }
+
   createConnection() {
     // let port = process.env.PORT;
-    let host = window.location.host
-    const newConnection = new WebSocket(`wss://${host}`);
+    // let host = window.location.host
+    // const newConnection = new WebSocket(`wss://${host}`);
+    const newConnection = new WebSocket(`ws://localhost:5000`);
     newConnection.onmessage = this.handleMessageReceived;
     console.log("setting new connection");
     console.log(newConnection);
@@ -31,19 +45,25 @@ export default class App extends React.Component {
     return (
       <div className="App">
           <div id="messageBoard">
-            <div className="message">
-              {this.state.messages.map(message => <p>{message}</p>)}
-            </div>
+            {this.state.messages.map(message => <p>{message}</p>)}
           </div>
-          <div id="userInput">
-            <input id="userName" placeholder="Enter Your User Name" onChange={(e) => {this.setState({user: e.target.value})}} />
-            <input id="message" placeholder="Enter Your Message" onChange={(e) => {this.setState({text: e.target.value})}} /> 
-            <button onClick={() => { 
-              console.log(this.connection);
-              this.connection.send(`'user':${this.state.user},'message':${this.state.text}`)
+          <input
+            id="userName"
+            placeholder="Enter Your User Name"
+            onChange={(e) => {this.setState({user: e.target.value})}}
+          />
+          <button id="reconnect" onClick={() => {this.createConnection()}}> Re-Connect </button>
+          <input
+            id="userMessage"
+            placeholder="Enter Your Message"
+            onChange={(e) => {this.setState({text: e.target.value})}}
+            onKeyDown={(e) => {
+              if(e.keyCode === 13) {
+                this.handleMessageSend()
               }
-            }> SEND </button>
-          </div>
+            }}
+          /> 
+          <button id="sendMessage" onClick={() => {this.handleMessageSend()}}> SEND </button>
       </div>
     );
 

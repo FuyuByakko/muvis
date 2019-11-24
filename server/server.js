@@ -5,17 +5,10 @@ const WebSocket = require('websocket').server
 const app = express();
 
 const server = http.createServer(app)
-// (req, res) => {
-//   console.info("Received a request");
-// })
-// let connection;
 const allConnections = [];
 
-// app.use(req => req.json());
+app.use(express.json());
 app.use(express.static(`${__dirname}/../build/`));
-// (req, res) => {
-
-// })
 
 const ws = new WebSocket({httpServer: server});
 
