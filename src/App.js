@@ -24,11 +24,13 @@ export default class App extends React.Component {
         </div>
         <input
           id="userNameInput"
+          type="text"
           placeholder="Enter Your User Name"
           onChange={(e) => {this.setState({user: e.target.value})}}
         />
         <button id="reconnect" onClick={() => {this.createConnection()}}> Re-Connect </button>
         <input
+          type="textarea"
           id="userMessageInput"
           placeholder="Enter Your Message"
           onChange={(e) => {this.setState({text: e.target.value})}}
@@ -48,8 +50,7 @@ export default class App extends React.Component {
   }
 
   handleMessageReceived = (message) => {
-    const receivedMessage = JSON.parse(message.data);
-    this.setState({messages: [...this.state.messages, receivedMessage]});
+    this.setState({messages: [...this.state.messages, message.data]});
   }
 
   handleMessageSend = () => {
