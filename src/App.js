@@ -18,26 +18,26 @@ export default class App extends React.Component {
   }
 
   handleMessageReceived = (message) => {
-    this.setState({messages: [...this.state.messages, message.data]});
+    const receivedMessage = JSON.parse(message.data);
+    this.setState({messages: [...this.state.messages, receivedMessage]});
   }
 
   handleMessageSend = () => {
     if (this.dataIsValid()) {
-      this.connection.send(`'user':${this.state.user},'message':${this.state.text}`)
-      console.info("Message Sent!");
+      this.connection.send(JSON.stringify({"user": this.state.user,"message": this.state.text}));
+      console.info("MESSAGE SENT!");
+    } else {
+      console.info("Input Invalid. Message Not Sent!");
     }
-    console.info("Input Invalid. Message Not Sent!");
-
   }
 
   createConnection() {
-    // let port = process.env.PORT;
-    // let host = window.location.host
+    let port = process.env.PORT;
+    let host = window.location.host
     // const newConnection = new WebSocket(`wss://${host}`);
-    const newConnection = new WebSocket(`ws://localhost:5000`);
+    const newConnection = new WebSocket("ws://localhost:5000");
     newConnection.onmessage = this.handleMessageReceived;
-    console.log("setting new connection");
-    console.log(newConnection);
+    console.info("CREATING NEW CONNECTION");
     return newConnection;
   }
 
@@ -45,7 +45,7 @@ export default class App extends React.Component {
     return (
       <div className="App">
           <div id="messageBoard">
-            {this.state.messages.map(message => <p>{message}</p>)}
+            {this.state.messages.map(message => <p>{message["message"]}</p>)}
           </div>
           <input
             id="userName"
