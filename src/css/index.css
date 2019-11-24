@@ -14,7 +14,9 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background: rgb(38,200,138);
-  background: linear-gradient(0deg, rgba(38,200,138,1) 0%, rgba(60,120,230,1) 100%);
+  background: repeating-linear-gradient(0deg, rgba(38,200,138,1) 0%, rgba(60,120,230,1) 100%);
+  background-size: auto;
+  /* background-repeat: no-repeat; */
 }
 
 code {
