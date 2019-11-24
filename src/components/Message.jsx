@@ -3,6 +3,7 @@ import './../css/Message.css';
 
 export default function Message(props) {
   const receivedMessage = JSON.parse(props.message);
+  receivedMessage.time = receivedMessage.time.replace("T"," @ ").replace(/\.\d{3}Z$/, "");
 
   return (
   <div className="message">
@@ -11,7 +12,7 @@ export default function Message(props) {
     ) : (
       <header className="userName">{receivedMessage.user}</header>
     )}
-    <main className="content"><p>{receivedMessage.message}</p></main>
+    <main className="content">{receivedMessage.message}</main>
     <time className="postTime">{receivedMessage.time}</time>
   </div>
   )

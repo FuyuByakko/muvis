@@ -32,7 +32,7 @@ ws.on('request', req => {
   //define closing logic
   connection.on('close', () => {
     console.info("CONNECTION CLOSED");
-    connection.send(JSON.stringify({"user":"Server", "server":true, "message":"Your session has ended!"}));
+    connection.send(JSON.stringify({"user":"Server", "server":true, "message":"Your session has ended!", "time":new Date()}));
   });
 
   //add connection to all list
@@ -51,5 +51,5 @@ const port = process.env.PORT || 5000;
 server.listen(port, () => {console.log(`Server is listening on port ${port}`)});
 
 function serverGreet(connection) {
-  connection.send(JSON.stringify({"user":"Server", "server":true, "message":"Welcome to the server!"}));
+  connection.send(JSON.stringify({"user":"Server", "server":true, "message":"Welcome to the server!", "time": new Date()}));
 }
