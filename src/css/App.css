@@ -1,8 +1,7 @@
 .App {
-  margin: auto;
+  margin: 0 auto;
   /* min-width: 350px; */
-  padding-top: 20px;
-  padding: 0;
+  padding: 20px 0px;
   display: grid;
   width: 70%;
   height: 100%;
