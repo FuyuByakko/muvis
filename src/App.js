@@ -63,11 +63,10 @@ export default class App extends React.Component {
   } 
 
   dataIsValid = () => {
-    return (this.state.user && this.state.text)
+    return (this.state.user !== "" && this.state.text !== "")
   }
 
   handleMessageReceived = (message) => {
-    if (message)
     this.setState({messages: [...this.state.messages, message.data]});
   }
 
