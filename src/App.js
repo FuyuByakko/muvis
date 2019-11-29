@@ -49,6 +49,7 @@ export default class App extends React.Component {
         <textarea
           id="userMessageInput"
           placeholder="Enter Your Message"
+          value={this.state.text}
           onChange={(e) => {this.setState({text: e.target.value})}}
           onKeyDown={(e) => {
             if(e.keyCode === 13 && !(e.shiftKey)) {
@@ -66,6 +67,7 @@ export default class App extends React.Component {
   }
 
   handleMessageReceived = (message) => {
+    if (message)
     this.setState({messages: [...this.state.messages, message.data]});
   }
 
@@ -73,6 +75,7 @@ export default class App extends React.Component {
     if (this.dataIsValid()) {
       this.connection.send(JSON.stringify({"user": this.state.user,"message": this.state.text}));
       console.info("MESSAGE SENT!");
+      this.setState({text: ""})
     } else {
       console.info("Input Invalid. Message Not Sent!");
     }
@@ -82,8 +85,8 @@ export default class App extends React.Component {
     // let port = process.env.PORT;
     let host = window.location.host
     console.info("CREATING NEW CONNECTION");
-    const newConnection = new WebSocket(`wss://${host}`);
-    // const newConnection = new WebSocket("ws://localhost:5000");
+    // const newConnection = new WebSocket(`wss://${host}`);
+    const newConnection = new WebSocket("ws://localhost:5000");
     newConnection.onmessage = this.handleMessageReceived;
     return newConnection;
   }

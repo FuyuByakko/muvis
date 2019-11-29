@@ -44,3 +44,7 @@
   grid-area: date;
   width: 100%;
 }
+
+.display-linebreak {
+  white-space: pre-line;
+}
