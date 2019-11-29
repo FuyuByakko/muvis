@@ -87,6 +87,7 @@ export default class App extends React.Component {
     console.info("CREATING NEW CONNECTION");
     // const newConnection = new WebSocket(`wss://${host}`);
     const newConnection = new WebSocket("ws://localhost:5000");
+    this.setState({messages: []})
     newConnection.onmessage = this.handleMessageReceived;
     return newConnection;
   }

@@ -18,15 +18,16 @@ ws.on('request', req => {
 
   //define logic after opening the connection
   console.info('NEW CONNECTION OPEN');
-  serverGreet(connection);
-  //send last 10 messages
+  //send last 20 messages
   let start = 0;
-  if (allMessages.length - 9 > 0) {
-    start = allMessages.length - 9;
+  if (allMessages.length - 19 > 0) {
+    start = allMessages.length - 19;
   }
   for (let i = start; i < allMessages.length; i++){
     connection.send(JSON.stringify(allMessages[i]));
   }
+  //send the Server Greet
+  serverGreet(connection);
 
 
   //define closing logic
@@ -51,5 +52,5 @@ const port = process.env.PORT || 5000;
 server.listen(port, () => {console.log(`Server is listening on port ${port}`)});
 
 function serverGreet(connection) {
-  connection.send(JSON.stringify({"user":"Server", "server":true, "message":"Welcome to the server!", "time": new Date()}));
+  connection.send(JSON.stringify({"user":"Server", "server":true, "message":"Welcome to the server!\nPrevious messages can be found above", "time": new Date()}));
 }
