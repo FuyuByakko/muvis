@@ -21,6 +21,21 @@ export default class App extends React.Component {
       <div className="App">
         <img id="logo" src={logo} alt="The logo for MUVIS" />
         <img id="qr-code" src={qrCode} alt="qr code link for MUVIS" />
+        <header className="greet-text">
+          Welcome to MUVIS!<br/>
+          Please find more info at my <a href="" target="_blank">GitHub</a>!<br />
+          You can scan the QR code below to open the app on the phone.<br />
+          <br />
+          Please don't hesitate to contact me with suggestions, comments or just for a chat!<br />
+          <br />
+          Have a nice day and enjoy the chat!
+        </header>
+        <header className="greet-text short">
+          Welcome to MUVIS!<br/>
+          Please find more info at my <a href="" target="_blank">GitHub</a>!<br />
+          Please don't hesitate to contact me with suggestions, comments or just for a chat!<br />
+          Have a nice day and enjoy the chat!
+        </header>
         <div id="messageBoard">
           {this.state.messages.map(message => <Message message={message} key={message.time}/>)}
         </div>

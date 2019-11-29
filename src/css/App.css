@@ -1,20 +1,21 @@
 .App {
   margin: 0 auto;
-  /* min-width: 350px; */
-  padding: 20px 0px;
+  min-width: 350px;
+  padding: 2vh;
   display: grid;
-  width: 70%;
-  height: 100%;
+  width: 70vw;
+  height: 95vh;
   text-align: center;
   justify-items: center;
   align-items: center;
   grid-template-columns: 3fr 1fr;
-  grid-template-rows: 100px 50px 400px 100px;
+  grid-template-rows: auto 1fr 7fr auto auto;
   grid-template-areas: 
     "logo logo"
     "userId reconnect"
     "messages messages"
-    "textInput textSend" ;
+    "textInput textSend"
+    "header header" ;
   column-gap: 30px;
   row-gap: 30px;
 }
@@ -24,8 +25,7 @@ textarea,
 button {
   border-radius: 10px;
   padding: 10px;
-  min-width: 100px;
-  margin: 10px;
+  /* margin: 10px; */
 }
 
 #logo {
@@ -34,8 +34,7 @@ button {
 
 #messageBoard {
   margin: 0;
-  padding: 5px;
-  padding-right: 15px;
+  padding: 10px 15px;
   grid-area: messages;
   width: 100%;
   height: 100%;
@@ -76,18 +75,38 @@ button {
   display: none;
 }
 
+.greet-text {
+  border: 2px white solid;
+  border-radius: 10px;
+  background-color: #97f3ee81;
+  margin: 0;
+  padding: 10px;
+  grid-area: header;
+  text-align: justify;
+  width: 100%;
+  height: 100%;
+  font-size: smaller;
+  display: none;
+}
+
+.greet-text.short {
+  display: block;
+}
+
 
 @media screen and (min-width: 900px) {
   .App {
-    width: 70%;
-    grid-template-columns: 1fr 3fr 1fr;
-    grid-template-rows: 150px 50px 400px 100px;
+    width: 70vw;
+    height: 90vh;
+    grid-template-columns: 3fr 1fr 5fr 1fr;
+    grid-template-rows: auto auto 3fr 1fr auto;
     column-gap: 40px;
     grid-template-areas: 
-    "logo qr reconnect"
-    "userId messages messages"
-    "textInput messages messages"
-    "textSend messages messages";
+    ". logo logo logo"
+    "header messages messages messages"
+    "qr messages messages messages"
+    "userId textInput textInput textSend"
+    "reconnect textInput textInput textSend";
   }
 
   #qr-code {
@@ -95,6 +114,18 @@ button {
     margin: 0;
     padding: 0;
     grid-area: qr;
-    max-height: 100px;;
+    min-width: 100px;
+    min-height: 100px;
+    max-height: 100%;
+    max-width: 100%;
+  }
+
+  .greet-text.short {
+    display: none;
+  }
+
+  .greet-text {
+    background-color: #4fc09581;
+    display: block;
   }
 }
