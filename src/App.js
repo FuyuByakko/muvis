@@ -53,6 +53,7 @@ export default class App extends React.Component {
           onChange={(e) => {this.setState({text: e.target.value})}}
           onKeyDown={(e) => {
             if(e.keyCode === 13 && !(e.shiftKey)) {
+              e.preventDefault()
               this.handleMessageSend();
             }
           }}
@@ -63,7 +64,11 @@ export default class App extends React.Component {
   } 
 
   dataIsValid = () => {
-    return (this.state.user !== "" && this.state.text !== "")
+    console.log(this.state.user)
+    console.log(this.state.text)
+    const info = (this.state.user.length > 0 && this.state.text.length > 0)
+    console.log(info)
+    return info
   }
 
   handleMessageReceived = (message) => {
@@ -73,8 +78,8 @@ export default class App extends React.Component {
   handleMessageSend = () => {
     if (this.dataIsValid()) {
       this.connection.send(JSON.stringify({"user": this.state.user,"message": this.state.text}));
-      console.info("MESSAGE SENT!");
       this.setState({text: ""})
+      console.info("MESSAGE SENT!");
     } else {
       console.info("Input Invalid. Message Not Sent!");
     }
@@ -84,8 +89,8 @@ export default class App extends React.Component {
     // let port = process.env.PORT;
     let host = window.location.host
     console.info("CREATING NEW CONNECTION");
-    const newConnection = new WebSocket(`wss://${host}`);
-    // const newConnection = new WebSocket("ws://localhost:5000");
+    // const newConnection = new WebSocket(`wss://${host}`);
+    const newConnection = new WebSocket("ws://localhost:5000");
     this.setState({messages: []})
     newConnection.onmessage = this.handleMessageReceived;
     return newConnection;
