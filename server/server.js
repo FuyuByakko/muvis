@@ -15,7 +15,7 @@ const ws = new WebSocket({httpServer: server});
 
 ws.on('request', req => {
   const connection = req.accept(null, req.origin);
-
+  // console.info(`Total connections: ${allConnections.length}`)
   //define logic after opening the connection
   console.info('NEW CONNECTION OPEN');
   //send last 20 messages
@@ -34,6 +34,8 @@ ws.on('request', req => {
   connection.on('close', () => {
     console.info("CONNECTION CLOSED");
     connection.send(JSON.stringify({"user":"Server", "server":true, "message":"Your session has ended!", "time":new Date()}));
+    // let connectionIndex = allConnections.indexOf(connection);
+    // console.log(connectionIndex);
   });
 
   //add connection to all list

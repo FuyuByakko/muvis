@@ -7,7 +7,7 @@ import Message from './components/Message'
 export default class App extends React.Component {
   constructor() {
     super();
-    this.connection = this.createConnection();
+    // this.connection = this.createConnection();
     this.state = {
       connection: null,
       messages: [],
@@ -86,7 +86,7 @@ export default class App extends React.Component {
 
   handleMessageSend = () => {
     if (this.dataIsValid()) {
-      this.connection.send(JSON.stringify({"user": this.state.user,"message": this.state.text}));
+      this.state.connection.send(JSON.stringify({"user": this.state.user,"message": this.state.text}));
       this.setState({text: ""})
       console.info("MESSAGE SENT!");
     } else {
@@ -95,13 +95,21 @@ export default class App extends React.Component {
   }
 
   createConnection() {
+    if (this.state.connection) {
+      this.state.connection.close();
+    }
     // let port = process.env.PORT;
     let host = window.location.host
     console.info("CREATING NEW CONNECTION");
     // const newConnection = new WebSocket(`wss://${host}`);
     const newConnection = new WebSocket("ws://localhost:5000");
-    this.setState({messages: []})
     newConnection.onmessage = this.handleMessageReceived;
-    return newConnection;
+    this.setState({messages: [], connection: newConnection})
+    // return newConnection;
+  }
+
+  componentDidMount() {
+    this.createConnection();
+    // this.setState({messages: [], connection: newConnection})
   }
 }
