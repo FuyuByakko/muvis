@@ -37,14 +37,15 @@ export default class App extends React.Component {
           Have a nice day and enjoy the chat!
         </header>
         <div id="messageBoard">
-          {this.state.messages.map(message => {
+          {this.state.messages.map((message, index) => {
             const ref = React.createRef();
+
             const scrollIn = (ref) => ref.current.scrollIntoView({
               behavior: 'smooth',
               block: 'start',
             });
 
-          return <Message refLink={ref} scroll={scrollIn} message={message} key={message.time}/>}
+          return <Message refLink={ref} scroll={scrollIn} message={message} key={`${index}-${message}`}/>}
           )}
         </div>
         <input
@@ -97,8 +98,8 @@ export default class App extends React.Component {
     // let port = process.env.PORT;
     let host = window.location.host
     console.info("CREATING NEW CONNECTION");
-    const newConnection = new WebSocket(`wss://${host}`);
-    // const newConnection = new WebSocket("ws://localhost:5000");
+    // const newConnection = new WebSocket(`wss://${host}`);
+    const newConnection = new WebSocket("ws://localhost:5000");
     this.setState({messages: []})
     newConnection.onmessage = this.handleMessageReceived;
     return newConnection;
